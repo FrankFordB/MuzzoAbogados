@@ -295,49 +295,7 @@
         </div>
       </section>
 
-      <section id="contacto" class="section contact">
-        <div class="container">
-          <p class="eyebrow gold">Contacto</p>
-          <h2>Conversemos su caso</h2>
-          <p class="section-lead">Respondemos el mismo día hábil. Sin compromiso.</p>
-
-          <div class="contact-grid">
-            <form id="contact-form" class="form" novalidate>
-              <div class="form-row">
-                <div class="field">
-                  <label for="name">Nombre</label>
-                  <input id="name" name="name" type="text" autocomplete="name" required placeholder="Su nombre" />
-                  <span class="error" aria-live="polite"></span>
-                </div>
-                <div class="field">
-                  <label for="email">Correo</label>
-                  <input id="email" name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com" />
-                  <span class="error" aria-live="polite"></span>
-                </div>
-              </div>
-              <div class="field">
-                <label for="message">Mensaje</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Cuéntenos brevemente su situación"></textarea>
-                <span class="error" aria-live="polite"></span>
-              </div>
-              <div class="form-actions">
-                <button class="btn btn-gold" type="submit">Enviar Consulta</button>
-                <span id="form-status" class="form-status" aria-live="polite"></span>
-              </div>
-            </form>
-
-            <aside class="contact-aside">
-              <h3>Datos de contacto</h3>
-              <address>
-                <p>📞 <a href="tel:+56966089888">+56 9 6608 9888</a></p>
-                <p>✉ <a href="mailto:contacto@muzzo.cl">contacto@muzzo.cl</a></p>
-                <p>🕘 Lun–Dom 8:00</p>
-              </address>
-              <p class="muted">Protegemos su información. No compartimos datos con terceros.</p>
-            </aside>
-          </div>
-        </div>
-      </section>
+      
     </main>
 
     <footer class="footer">
@@ -394,6 +352,11 @@
       </div>
     </footer>
 
+    <!-- WhatsApp floating button -->
+    <a id="whatsapp-fab" class="whatsapp-fab" href="#" aria-label="Enviar WhatsApp"> 
+      <span class="wa-icon"><i class="fa-brands fa-whatsapp"></i></span>
+      <span class="wa-text">Envía tu duda</span>
+    </a>
     <script src="script.js"></script>
   </body>
   </html>

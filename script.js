@@ -35,6 +35,20 @@
     });
   }
 
+const navBaja = document.querySelector('.navbar');
+  const onScrolling = () => {
+    if(!navBaja) return;
+    if(window.scrollY > 5){
+      navBaja.style.top = '0';
+      navBaja.style.margin = '0';
+    } else {
+      navBaja.style.top = '';
+      navBaja.style.margin = '';
+    }
+  };
+  window.addEventListener('scroll', onScrolling, {passive:true});
+  onScrolling();
+
   const nav = document.querySelector('.navbar');
   const onScroll = () => {
     if(!nav) return;
@@ -125,20 +139,23 @@
   }
 
   // Contact form validation (basic, client-side only)
-  const form = document.getElementById('contact-form');
-  if(form){
-    const status = document.getElementById('form-status');
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
     const fields = {
-      name: form.querySelector('#name'),
-      email: form.querySelector('#email'),
-      message: form.querySelector('#message')
+      name: form.querySelector('[name="name"]'),
+      email: form.querySelector('[name="email"]'),
+      message: form.querySelector('[name="message"]')
     };
+    
+    if (!fields.name || !fields.email || !fields.message) return;
+
     const setError = (el, msg) => {
       const field = el.closest('.field');
       field?.classList.toggle('invalid', Boolean(msg));
       const err = field?.querySelector('.error');
       if(err) err.textContent = msg || '';
     };
+
     const validate = () => {
       let ok = true;
       if(!fields.name.value.trim()){ setError(fields.name, 'Ingrese su nombre'); ok = false; } else setError(fields.name);
@@ -147,23 +164,39 @@
       if(fields.message.value.trim().length < 10){ setError(fields.message, 'Cuéntenos un poco más (10+ caracteres)'); ok = false; } else setError(fields.message);
       return ok;
     };
+
     form.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      status.textContent = '';
-      if(!validate()) return;
-      // Simulación de envío
-      status.textContent = 'Enviando…';
-      setTimeout(()=>{
-        status.textContent = 'Gracias, hemos recibido su mensaje. Le contactaremos pronto.';
-        form.reset();
-      }, 600);
+      if(!validate()) {
+        e.preventDefault();
+        return;
+      }
     });
-    form.addEventListener('input', (e)=>{
-      const t = e.target;
-      if(!(t instanceof HTMLElement)) return;
-      if(t.id === 'name') setError(fields.name);
-      if(t.id === 'email') setError(fields.email);
-      if(t.id === 'message') setError(fields.message);
+
+      form.addEventListener('input', (e)=>{
+        const t = e.target;
+        if(!(t instanceof HTMLElement)) return;
+        if(t.name === 'name') setError(fields.name);
+        if(t.name === 'email') setError(fields.email);
+        if(t.name === 'message') setError(fields.message);
+      });
     });
-  }
-})();
+
+    // WhatsApp floating button behaviour
+    const waBtn = document.getElementById('whatsapp-fab');
+    if(waBtn){
+      // Cambia aquí al número destino sin signo + (ej: 56966089888)
+      const phone = '56966089888';
+      const defaultMsg = 'Hola, quisiera hacer una consulta sobre mi caso. ¿Podrían ayudarme?';
+      waBtn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(defaultMsg)}`;
+        // Abrir en nueva pestaña para WhatsApp Web; en movil abrirá app si corresponde
+        window.open(url, '_blank');
+      });
+      // teclado: Enter/Space
+      waBtn.addEventListener('keydown', (ev)=>{
+        if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); waBtn.click(); }
+      });
+    }
+
+  })();
